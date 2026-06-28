@@ -1,0 +1,6 @@
+{
+  "name": "Get Taxi Meter",
+  "description": "A dispatcher-controlled native Android taxi meter application featuring mobile OTP authentication, a modular live tariff calculation engine, realtime tracking via Firestore, push assignments via FCM, local Room synchronization via WorkManager, and automatic digital receipt sharing.",
+  "requestFramePermissions": ["camera", "microphone", "geolocation"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

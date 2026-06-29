@@ -1,0 +1,50 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+    function incoming() {
+      return request.resource.data;
+    }
+    function existing() {
+      return resource.data;
+    }
+    function isSignedIn() {
+      return request.auth != null;
+    }
+    function isEmailVerified() {
+      return isSignedIn() && (request.auth.token.email_verified == true || request.auth.token.firebase.sign_in_provider == 'anonymous');
+    }
+    function isAdmin() {
+      return isSignedIn() && (
+        request.auth.token.email == 'basheer222@gmail.com' ||
+        exists(/databases/$(database)/documents/admins/$(request.auth.uid))
+      );
+    }
+
+    match /drivers/{driverId} {
+      allow read: if isSignedIn();
+      allow write: if isSignedIn() && isValidId(driverId);
+    }
+
+    match /trips/{tripId} {
+      allow read: if isSignedIn();
+      allow write: if isSignedIn() && isValidId(tripId);
+    }
+
+    match /settings/tariff {
+      allow read: if isSignedIn();
+      allow write: if isSignedIn();
+    }
+
+    match /settings/rental_rules {
+      allow read: if isSignedIn();
+      allow write: if isSignedIn();
+    }
+  }
+}

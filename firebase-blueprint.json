@@ -1,0 +1,100 @@
+{
+  "entities": {
+    "Driver": {
+      "title": "Driver",
+      "description": "Information about a taxi driver",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "mobile": { "type": "string" },
+        "isEnabled": { "type": "boolean" },
+        "isOnline": { "type": "boolean" },
+        "currentLat": { "type": "number" },
+        "currentLng": { "type": "number" },
+        "lastUpdated": { "type": "integer" }
+      },
+      "required": ["id", "name", "mobile", "isEnabled", "isOnline", "currentLat", "currentLng", "lastUpdated"]
+    },
+    "Trip": {
+      "title": "Trip",
+      "description": "Taxi trip transaction details",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "customerName": { "type": "string" },
+        "customerMobile": { "type": "string" },
+        "pickupLocation": { "type": "string" },
+        "dropLocation": { "type": "string" },
+        "tripType": { "type": "string" },
+        "status": { "type": "string" },
+        "driverId": { "type": "string" },
+        "driverName": { "type": "string" },
+        "otp": { "type": "string" },
+        "startTimestamp": { "type": "integer" },
+        "endTimestamp": { "type": "integer" },
+        "baseFare": { "type": "number" },
+        "farePerKm": { "type": "number" },
+        "waitingChargePerMin": { "type": "number" },
+        "isHillChargeEnabled": { "type": "boolean" },
+        "isNightChargeEnabled": { "type": "boolean" },
+        "rentalHoursIncluded": { "type": "integer" },
+        "rentalKmIncluded": { "type": "integer" },
+        "rentalExtraKmRate": { "type": "number" },
+        "rentalExtraHourRate": { "type": "number" },
+        "totalKm": { "type": "number" },
+        "waitingMinutes": { "type": "number" },
+        "calculatedFare": { "type": "number" },
+        "gstAmount": { "type": "number" },
+        "totalWithGst": { "type": "number" },
+        "isSynced": { "type": "boolean" },
+        "lastUpdated": { "type": "integer" }
+      },
+      "required": ["id", "customerName", "customerMobile", "pickupLocation", "dropLocation", "tripType", "status", "driverId", "driverName", "otp", "baseFare", "farePerKm", "waitingChargePerMin", "isHillChargeEnabled", "isNightChargeEnabled", "rentalHoursIncluded", "rentalKmIncluded", "rentalExtraKmRate", "rentalExtraHourRate", "totalKm", "waitingMinutes", "calculatedFare", "gstAmount", "totalWithGst", "isSynced", "lastUpdated"]
+    },
+    "Tariff": {
+      "title": "Tariff",
+      "description": "Distance tariff rules settings",
+      "type": "object",
+      "properties": {
+        "baseFare": { "type": "number" },
+        "farePerKm": { "type": "number" },
+        "waitingChargePerMin": { "type": "number" },
+        "hillChargeActive": { "type": "boolean" },
+        "nightChargeActive": { "type": "boolean" },
+        "gstPercent": { "type": "number" }
+      },
+      "required": ["baseFare", "farePerKm", "waitingChargePerMin", "hillChargeActive", "nightChargeActive", "gstPercent"]
+    },
+    "RentalRules": {
+      "title": "RentalRules",
+      "description": "Hourly rental package rules settings",
+      "type": "object",
+      "properties": {
+        "hoursIncluded": { "type": "integer" },
+        "kmIncluded": { "type": "integer" },
+        "extraKmRate": { "type": "number" },
+        "extraHourRate": { "type": "number" }
+      },
+      "required": ["hoursIncluded", "kmIncluded", "extraKmRate", "extraHourRate"]
+    }
+  },
+  "firestore": {
+    "drivers/{driverId}": {
+      "schema": { "$ref": "#/entities/Driver" },
+      "description": "Driver location, online and activation status"
+    },
+    "trips/{tripId}": {
+      "schema": { "$ref": "#/entities/Trip" },
+      "description": "Trip booking and routing records"
+    },
+    "settings/tariff": {
+      "schema": { "$ref": "#/entities/Tariff" },
+      "description": "System tariff configuration"
+    },
+    "settings/rental_rules": {
+      "schema": { "$ref": "#/entities/RentalRules" },
+      "description": "System hourly rental package rules"
+    }
+  }
+}
